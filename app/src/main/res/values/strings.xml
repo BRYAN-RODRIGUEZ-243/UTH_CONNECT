@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Doc_app</string>
+    <string name="text_splash">CONNECT</string>
+    <string name="seleccionar_carrera">SELECCIONE</string>
+    <string name="title_activity_navegacion">Navegacion</string>
+
+    <string name="mensaje">Te hemos enviado un código de verificación para
+recuperación de contraseña. Para completar la verificación por favor ingrese el código de 6 dígitos.</string>
+    <string name="mensaje1"></string>
+    <string name="mensaje2">¿No recibiste ningún código?</string>
+    <string name="banner">Crear Grupo</string>
+    <string name="grupo">Grupo:</string>
+    <string name="descripcion">Descripción:</string>
+    <string name="añadirp">Añadir Participante:</string>
+    <string name="addP">Añadir Participantes</string>
+    <string name="buscaru">Buscar Usuarios</string>
+    <string name="person1">Brayan Aguilar</string>
+</resources>
