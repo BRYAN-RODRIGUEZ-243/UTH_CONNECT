@@ -79,9 +79,10 @@ public class acceso extends AppCompatActivity {
             edtCuenta.setText(account);
             Toast.makeText(this, "Espera...", Toast.LENGTH_LONG).show();
 
-           // confirmar_usuario_firebase();
+       //     confirmar_usuario_firebase();
         } else {
-            Toast.makeText(this, "Datos no guardados", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(acceso.this, registrarse.class);
+            startActivity(intent);
         }
 
     }
@@ -95,7 +96,7 @@ public class acceso extends AppCompatActivity {
             Toast.makeText(this, "Ingrese correo y contraseña", Toast.LENGTH_SHORT).show();
             return;
         }
-        mfirestore.collection("usuarios")
+        mfirestore.collection("usuario")
                 .whereEqualTo("N.Cuenta", edtCuenta.getText().toString().trim())
                 .whereEqualTo("password", edtPassword.getText().toString().trim())
                 .get()
@@ -103,13 +104,13 @@ public class acceso extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            // Usuario no existe, ejecutar código de registro
+                            Intent intent = new Intent(acceso.this, Contenedor.class);
+                            intent.putExtra("nombre", nombre);
+                            intent.putExtra("cuenta", account);
+                            startActivity(intent);
                             if (task.getResult().isEmpty()) {
-                                // Usuario no existe, ejecutar código de registro
-                                Intent intent = new Intent(acceso.this, Contenedor.class);
-
-                                intent.putExtra("nombre", nombre);
-                                intent.putExtra("cuenta", account);
-                                startActivity(intent);
+                                Toast.makeText(acceso.this, "Usuario no registrado", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(acceso.this, "Datos no guardados", Toast.LENGTH_SHORT).show();
                             }

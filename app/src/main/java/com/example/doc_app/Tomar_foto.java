@@ -74,14 +74,14 @@ public class Tomar_foto extends AppCompatActivity {
         mstorage = FirebaseStorage.getInstance().getReference();
         frameLayoutDerecho = findViewById(R.id.frameLayout);
         button=findViewById(R.id.btn_login);
-
+/*
         Intent intent = getIntent();
          nombre = intent.getStringExtra("nombre");
          email = intent.getStringExtra("email");
          cuenta = intent.getStringExtra("cuenta");
          password = intent.getStringExtra("password");
          seleccion = intent.getStringExtra("seleccion");
-         facultad = intent.getStringExtra("facultad");
+         facultad = intent.getStringExtra("facultad");*/
 
 
 
@@ -94,7 +94,7 @@ public class Tomar_foto extends AppCompatActivity {
       /*  name.setText("NOMBRE: " .concat(nombre.toUpperCase()));
         account.setText("N. CUENTA: " .concat(email.toUpperCase()));
         mail.setText("CORREO: " .concat(cuenta.toUpperCase()));
-        pass.setText("FACULTAD: " .concat(facultad.toUpperCase()));*/
+        pass.setText("FACULTAD: " .concat(facultad.toUpperCase()));
         select.setText("CARRERA: " .concat(seleccion.toUpperCase()));
 
         // Implementar el if-else para la selección de carreras
@@ -120,19 +120,19 @@ public class Tomar_foto extends AppCompatActivity {
             frameLayoutDerecho.addView(imageView);
         } else {
             // Código a ejecutar si no se selecciona ninguna carrera específica
-        }
+        }*/
 
         button.setOnClickListener(new View.OnClickListener()
 
         {
             @Override
             public void onClick (View v){
-                registrar_usuario_respaldo_firebase();
-                subirImagenAFirebaseStorage();
+              /*  registrar_usuario_respaldo_firebase();
+                subirImagenAFirebaseStorage();*/
 
-                Intent env = new Intent(Tomar_foto.this, Contenedor.class);
-                env.putExtra("nombre", nombre);
-                env.putExtra("Cuenta", cuenta);
+                Intent env = new Intent(Tomar_foto.this, enviar_clave_confirmacion.class);
+             //   env.putExtra("nombre", nombre);
+             //   env.putExtra("Cuenta", cuenta);
                 startActivity(env);
             }
         });

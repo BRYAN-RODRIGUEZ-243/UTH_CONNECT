@@ -41,12 +41,12 @@ public class carrera extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(carrera.this, Tomar_foto.class);
-                intent.putExtra("nombre", nombre);
+               /* intent.putExtra("nombre", nombre);
                 intent.putExtra("email", email);
                 intent.putExtra("cuenta", cuenta);
                 intent.putExtra("password", password);
                 intent.putExtra("seleccion", seleccion);
-                intent.putExtra("facultad", facultad);
+                intent.putExtra("facultad", facultad);*/
                 startActivity(intent);
             }
         });
