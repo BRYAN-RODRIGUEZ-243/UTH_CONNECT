@@ -65,7 +65,7 @@ public class Tomar_foto extends AppCompatActivity {
     static final int Peticion_AccesoCamara = 101;
     static final int Peticion_TomarFoto = 102;
 
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,8 +97,6 @@ public class Tomar_foto extends AppCompatActivity {
         select.setText("CARRERA: ".concat(seleccion.toUpperCase()));
 
         // Implementar el if-else para la selección de carreras
-
-
         if (seleccion.equals("Ingeniería en Computacion")) {
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.drawable.facu_ing_sis);
@@ -123,15 +121,15 @@ public class Tomar_foto extends AppCompatActivity {
             // Código a ejecutar si no se selecciona ninguna carrera específica
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              /*  registrar_usuario_respaldo_firebase();
-                subirImagenAFirebaseStorage();*/
-
+        button.setOnClickListener(v -> {
+            if (Img == null) {
+                Toast.makeText(getApplicationContext(), "Selecciona una foto de perfil", Toast.LENGTH_LONG).show();
+            } else {
+                registrar_usuario_respaldo_firebase();
+                subirImagenAFirebaseStorage();
                 Intent env = new Intent(Tomar_foto.this, enviar_clave_confirmacion.class);
-                //   env.putExtra("nombre", nombre);
-                //   env.putExtra("Cuenta", cuenta);
+              //  env.putExtra("nombre", String.valueOf(name));
+              //  env.putExtra("cuenta", String.valueOf(account));
                 startActivity(env);
             }
         });
@@ -146,9 +144,6 @@ public class Tomar_foto extends AppCompatActivity {
         });
     }
 
-    public void GuardarDatos() {
-        //Aqui Guardar los datos
-    }
 
     private void Permisos() {
         // Metodo para obtener los permisos requeridos de la aplicacion
@@ -259,8 +254,6 @@ public class Tomar_foto extends AppCompatActivity {
 
     public void registrar_usuario_respaldo_firebase() {
         // Respaldo de datos para evitar errores
-
-
         if (nombre.isEmpty() || email.isEmpty() || cuenta.isEmpty() || password.isEmpty() || seleccion.isEmpty() || facultad.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Favor, revisar que todos los campos estén llenos", Toast.LENGTH_SHORT).show();
 
@@ -291,7 +284,6 @@ public class Tomar_foto extends AppCompatActivity {
         map.put("carrera", selc);
         map.put("facultad", facu);
 
-
         // Agregar usuario a la colección en Firebase
         mfirestore.collection("usuario")
                 .add(map)
@@ -302,8 +294,6 @@ public class Tomar_foto extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Registro completo", Toast.LENGTH_LONG).show();
                         finish();
 
-                        Intent intent = new Intent(Tomar_foto.this, enviar_clave_confirmacion.class);
-                        startActivity(intent);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

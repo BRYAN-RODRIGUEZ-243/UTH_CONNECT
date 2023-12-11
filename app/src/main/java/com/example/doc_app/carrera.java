@@ -35,23 +35,20 @@ public class carrera extends AppCompatActivity {
         cuenta = intent.getStringExtra("CORREO");
         password = intent.getStringExtra("pass");
 
-        Toast.makeText(getApplicationContext(), "Seleccionado: " + nombre, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(getApplicationContext(), "Seleccionado: " + nombre+email, Toast.LENGTH_SHORT).show();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(seleccion.equals("")){
-                    Toast.makeText(getApplicationContext(), "Debes seleccionar tu carrera", Toast.LENGTH_SHORT).show();
-                }else {
-                    Intent intent = new Intent(carrera.this, Tomar_foto.class);
-                    intent.putExtra("nombre", nombre);
-                    intent.putExtra("email", email);
-                    intent.putExtra("cuenta", cuenta);
-                    intent.putExtra("password", password);
-                    intent.putExtra("seleccion", seleccion);
-                    intent.putExtra("facultad", facultad);
-                    startActivity(intent);
-                }
+        button.setOnClickListener(v -> {
+            if(seleccion.equals("")){
+                Toast.makeText(getApplicationContext(), "Debes seleccionar tu carrera", Toast.LENGTH_SHORT).show();
+            }else {
+                Intent intent1 = new Intent(carrera.this, Tomar_foto.class);
+                intent1.putExtra("nombre", nombre);
+                intent1.putExtra("email", email);
+                intent1.putExtra("cuenta", cuenta);
+                intent1.putExtra("password", password);
+                intent1.putExtra("seleccion", seleccion);
+                intent1.putExtra("facultad", facultad);
+                startActivity(intent1);
             }
         });
 

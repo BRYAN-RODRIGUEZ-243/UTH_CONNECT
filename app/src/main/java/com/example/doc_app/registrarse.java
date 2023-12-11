@@ -73,7 +73,7 @@ public class registrarse extends AppCompatActivity {
         intent.putExtra("CORREO", correo);
         intent.putExtra("pass", password);
         startActivity(intent);
-        Toast.makeText(this, "Selecciona tu carrera", Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, "Selecciona tu carrera"+nombre+numeroCuenta+correo+password, Toast.LENGTH_SHORT).show();
     }
 
     public void guardar_datos_persistencia() {

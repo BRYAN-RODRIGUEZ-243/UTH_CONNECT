@@ -26,50 +26,29 @@ public class Contenedor extends AppCompatActivity {
         cuent = findViewById(R.id.textView3);
 
         // Obtener datos del intent
+        Intent intent = getIntent();
+        nombre = intent.getStringExtra("nombre");
+        seleccion = intent.getStringExtra("cuenta");
 
-            Intent intent = getIntent();
-            nombre = intent.getStringExtra("nombre");
-            seleccion = intent.getStringExtra("cuenta");
-            nombrec.setText(nombre);
-            cuent.setText(seleccion);
-            nombrec.setText(nombre);
-            cuent.setText(seleccion);
+        nombrec.setText(nombre);
+        cuent.setText(seleccion);
+
 
         ConstraintLayout messaLayout = findViewById(R.id.messa);
         ConstraintLayout messaLayout2 = findViewById(R.id.messa2);
         ConstraintLayout messaLayout3 = findViewById(R.id.messa3);
 
-         img = findViewById(R.id.image_view21);
+        img = findViewById(R.id.image_view21);
 
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               abrirGrupo();
-            }
-        });
+        img.setOnClickListener(v -> abrirGrupo());
 
 
         // Configurar click listeners
-        messaLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirChatActivity();
-            }
-        });
+        messaLayout.setOnClickListener(v -> abrirChatActivity());
 
-        messaLayout2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirChatLista();
-            }
-        });
+        messaLayout2.setOnClickListener(v -> abrirChatLista());
 
-        messaLayout3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirPerfil();
-            }
-        });
+        messaLayout3.setOnClickListener(v -> abrirPerfil());
     }
 
     private void abrirChatActivity() {
