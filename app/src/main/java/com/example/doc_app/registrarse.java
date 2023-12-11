@@ -1,13 +1,13 @@
 package com.example.doc_app;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,10 +16,10 @@ import android.widget.Toast;
 
 public class registrarse extends AppCompatActivity {
     Button button;
-    private EditText editTextNombre, editTextNumeroCuenta, editTextCorreo, editTextpass;
-    String nombre, numeroCuenta,correo,contraseña;
+    EditText editTextNombre, editTextNumeroCuenta, editTextCorreo, editTextpass;
+    String nombre, numeroCuenta, correo, password;
 
-    private Button btnRegistrar;
+    Button btnRegistrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,51 +30,49 @@ public class registrarse extends AppCompatActivity {
         editTextCorreo = findViewById(R.id.edt_email);
         editTextpass = findViewById(R.id.edt_pass);
         btnRegistrar = findViewById(R.id.id_persistent);
-
         button = findViewById(R.id.btn_login);
 
         CheckBox checkBox = findViewById(R.id.id_persistent);
 
         // Agrega un listener para el evento de clic en el CheckBox
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // El estado del CheckBox ha cambiado
             if (isChecked) {
-                guardar_datos_persistencia();
-            } else {
+                nombre = editTextNombre.getText().toString();
+                numeroCuenta = editTextNumeroCuenta.getText().toString();
+                correo = editTextCorreo.getText().toString();
+                password = editTextpass.getText().toString();
+                if (nombre.isEmpty() || numeroCuenta.isEmpty() || correo.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Datos no guardados \n Todos los campos deben estar llenos", Toast.LENGTH_SHORT).show();
 
+                } else {
+                    guardar_datos_persistencia();
+                }
             }
         });
 
 
-        button.setOnClickListener(new View.OnClickListener()
-
-    {
-        @Override
-        public void onClick (View v){
-        registrarUsuario();
-
+        button.setOnClickListener(v -> {
+            nombre = editTextNombre.getText().toString();
+            numeroCuenta = editTextNumeroCuenta.getText().toString();
+            correo = editTextCorreo.getText().toString();
+            password = editTextpass.getText().toString();
+            if (nombre.isEmpty() || numeroCuenta.isEmpty() || correo.isEmpty() || password.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Todos los campos deben estar llenos", Toast.LENGTH_SHORT).show();
+            } else {
+                registrarUsuario();
+            }
+        });
     }
-    });
-}
 
     private void registrarUsuario() {
-         nombre = editTextNombre.getText().toString();
-         numeroCuenta = editTextNumeroCuenta.getText().toString();
-         correo = editTextCorreo.getText().toString();
-         contraseña = editTextpass.getText().toString();
 
         Intent intent = new Intent(registrarse.this, carrera.class);
         // Puedes pasar los datos como extras en el Intent
         intent.putExtra("NOMBRE", nombre);
         intent.putExtra("NUMERO_CUENTA", numeroCuenta);
         intent.putExtra("CORREO", correo);
-        intent.putExtra("pass", contraseña);
-
-        // Iniciar el nuevo Activity
-
+        intent.putExtra("pass", password);
         startActivity(intent);
-
-
         Toast.makeText(this, "Selecciona tu carrera", Toast.LENGTH_SHORT).show();
     }
 

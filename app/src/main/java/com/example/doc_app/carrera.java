@@ -17,7 +17,7 @@ public class carrera extends AppCompatActivity {
     ArrayAdapter<String> adatapateritem;
     AutoCompleteTextView completacion;
     Button button;
-    String seleccion;
+    String seleccion = "";
     String nombre, email, cuenta, password, facultad;
 
 
@@ -40,46 +40,42 @@ public class carrera extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(carrera.this, Tomar_foto.class);
-               /* intent.putExtra("nombre", nombre);
-                intent.putExtra("email", email);
-                intent.putExtra("cuenta", cuenta);
-                intent.putExtra("password", password);
-                intent.putExtra("seleccion", seleccion);
-                intent.putExtra("facultad", facultad);*/
-                startActivity(intent);
+                if(seleccion.equals("")){
+                    Toast.makeText(getApplicationContext(), "Debes seleccionar tu carrera", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(carrera.this, Tomar_foto.class);
+                    intent.putExtra("nombre", nombre);
+                    intent.putExtra("email", email);
+                    intent.putExtra("cuenta", cuenta);
+                    intent.putExtra("password", password);
+                    intent.putExtra("seleccion", seleccion);
+                    intent.putExtra("facultad", facultad);
+                    startActivity(intent);
+                }
             }
         });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, carrerasUniversitarias);
-
-        // AutoCompleteTextView
         autoCompleteTextView = findViewById(R.id.autoComplete);
         autoCompleteTextView.setAdapter(adapter);
 
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                seleccion = (String) parent.getItemAtPosition(position);
-                // Implementar el if-else para la selección de carreras
-                if (seleccion.equals("Ingeniería Informática")) {
-                   facultad = "INGENIERIA";
-                } else if (seleccion.equals("Medicina")) {
-                    facultad = "MEDICINA";
-                } else if (seleccion.equals("Derecho")) {
-                    facultad = "DERECHO";
-                } else if (seleccion.equals("Psicología")) {
-                    facultad = "MEDICINA";
-                } else if (seleccion.equals("Ingenieria Industrial")) {
-                    facultad = "INGENIERIA";
-                } else {
+        autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+            seleccion = (String) parent.getItemAtPosition(position);
+            // Implementar el if-else para la selección de carreras
+            if (seleccion.equals("Ingeniería en Computacion")) {
+               facultad = "INGENIERIA";
+            } else if (seleccion.equals("Medicina")) {
+                facultad = "MEDICINA";
+            } else if (seleccion.equals("Derecho")) {
+                facultad = "DERECHO";
+            } else if (seleccion.equals("Psicología")) {
+                facultad = "MEDICINA";
+            } else if (seleccion.equals("Ingenieria Industrial")) {
+                facultad = "INGENIERIA";
+            } else {
 
-                }
-
-                Toast.makeText(getApplicationContext(), "Seleccionado: " + seleccion, Toast.LENGTH_SHORT).show();
             }
+
         });
-
     }
-
 }

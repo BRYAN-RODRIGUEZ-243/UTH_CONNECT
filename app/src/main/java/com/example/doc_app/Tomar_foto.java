@@ -53,11 +53,11 @@ public class Tomar_foto extends AppCompatActivity {
 
     FrameLayout frameLayoutDerecho;
     TextView name, mail, account, pass, select;
-    String nombre ;
-    String email ;
-    String cuenta ;
-    String password ;
-    String seleccion ;
+    String nombre;
+    String email;
+    String cuenta;
+    String password;
+    String seleccion;
     String facultad;
     Button button;
     static final int Peticion_ElegirGaleria = 103;
@@ -73,16 +73,15 @@ public class Tomar_foto extends AppCompatActivity {
         mfirestore = FirebaseFirestore.getInstance();
         mstorage = FirebaseStorage.getInstance().getReference();
         frameLayoutDerecho = findViewById(R.id.frameLayout);
-        button=findViewById(R.id.btn_login);
-/*
-        Intent intent = getIntent();
-         nombre = intent.getStringExtra("nombre");
-         email = intent.getStringExtra("email");
-         cuenta = intent.getStringExtra("cuenta");
-         password = intent.getStringExtra("password");
-         seleccion = intent.getStringExtra("seleccion");
-         facultad = intent.getStringExtra("facultad");*/
+        button = findViewById(R.id.btn_login);
 
+        Intent intent = getIntent();
+        nombre = intent.getStringExtra("nombre");
+        email = intent.getStringExtra("email");
+        cuenta = intent.getStringExtra("cuenta");
+        password = intent.getStringExtra("password");
+        seleccion = intent.getStringExtra("seleccion");
+        facultad = intent.getStringExtra("facultad");
 
 
         name = findViewById(R.id.tvNombre);
@@ -91,14 +90,16 @@ public class Tomar_foto extends AppCompatActivity {
         pass = findViewById(R.id.tvfacultad);
         select = findViewById(R.id.enviado);
 
-      /*  name.setText("NOMBRE: " .concat(nombre.toUpperCase()));
-        account.setText("N. CUENTA: " .concat(email.toUpperCase()));
-        mail.setText("CORREO: " .concat(cuenta.toUpperCase()));
-        pass.setText("FACULTAD: " .concat(facultad.toUpperCase()));
-        select.setText("CARRERA: " .concat(seleccion.toUpperCase()));
+        name.setText("NOMBRE: ".concat(nombre.toUpperCase()));
+        account.setText("N. CUENTA: ".concat(email.toUpperCase()));
+        mail.setText("CORREO: ".concat(cuenta.toUpperCase()));
+        pass.setText("FACULTAD: ".concat(facultad.toUpperCase()));
+        select.setText("CARRERA: ".concat(seleccion.toUpperCase()));
 
         // Implementar el if-else para la selección de carreras
-        if (seleccion.equals("Ingeniería Informática")) {
+
+
+        if (seleccion.equals("Ingeniería en Computacion")) {
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.drawable.facu_ing_sis);
             frameLayoutDerecho.addView(imageView);
@@ -120,19 +121,17 @@ public class Tomar_foto extends AppCompatActivity {
             frameLayoutDerecho.addView(imageView);
         } else {
             // Código a ejecutar si no se selecciona ninguna carrera específica
-        }*/
+        }
 
-        button.setOnClickListener(new View.OnClickListener()
-
-        {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v){
+            public void onClick(View v) {
               /*  registrar_usuario_respaldo_firebase();
                 subirImagenAFirebaseStorage();*/
 
                 Intent env = new Intent(Tomar_foto.this, enviar_clave_confirmacion.class);
-             //   env.putExtra("nombre", nombre);
-             //   env.putExtra("Cuenta", cuenta);
+                //   env.putExtra("nombre", nombre);
+                //   env.putExtra("Cuenta", cuenta);
                 startActivity(env);
             }
         });
@@ -260,7 +259,6 @@ public class Tomar_foto extends AppCompatActivity {
 
     public void registrar_usuario_respaldo_firebase() {
         // Respaldo de datos para evitar errores
-
 
 
         if (nombre.isEmpty() || email.isEmpty() || cuenta.isEmpty() || password.isEmpty() || seleccion.isEmpty() || facultad.isEmpty()) {
