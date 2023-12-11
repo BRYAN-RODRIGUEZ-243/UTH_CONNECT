@@ -26,25 +26,15 @@ public class Contenedor extends AppCompatActivity {
         cuent = findViewById(R.id.textView3);
 
         // Obtener datos del intent
-        try {
+
             Intent intent = getIntent();
             nombre = intent.getStringExtra("nombre");
             seleccion = intent.getStringExtra("cuenta");
             nombrec.setText(nombre);
             cuent.setText(seleccion);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("Contenedor", "Error al obtener datos del Intent", e);
-            // Puedes manejar el error de otra manera si lo prefieres
-        }
+            nombrec.setText(nombre);
+            cuent.setText(seleccion);
 
-        // Inicializar TextViews
-
-
-        // Configurar valores en TextViews
-
-
-        // Inicializar ConstraintLayouts
         ConstraintLayout messaLayout = findViewById(R.id.messa);
         ConstraintLayout messaLayout2 = findViewById(R.id.messa2);
         ConstraintLayout messaLayout3 = findViewById(R.id.messa3);
