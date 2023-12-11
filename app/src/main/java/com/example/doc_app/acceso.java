@@ -1,39 +1,27 @@
 package com.example.doc_app;
 
-import static java.lang.System.*;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.Arrays;
 
 public class acceso extends AppCompatActivity {
     Button btnRegistrarse, btnIniciar;
     FirebaseFirestore mfirestore;
-    EditText edtCorreo, edtPassword,edtCuenta;
+    EditText edtPassword, edtCuenta;
 
-    String nombre ;
-    String account ;
+    String nombre;
+    String account;
     String pass;
 
     @Override
@@ -48,42 +36,27 @@ public class acceso extends AppCompatActivity {
         btnRegistrarse = findViewById(R.id.btnRegistrarse);
         cargarPreferencias();
 
-        btnIniciar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cargarPreferencias();
-            }
-        });
+        btnIniciar.setOnClickListener(view -> confirmar_usuario_firebase());
 
-        btnRegistrarse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnRegistrarse.setOnClickListener(view -> {
 
-                Intent intent = new Intent(acceso.this, registrarse.class);
-                startActivity(intent);
+            Intent intent = new Intent(acceso.this, registrarse.class);
+            startActivity(intent);
 
-            }
         });
     }
 
     private void cargarPreferencias() {
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
 
-        // Verificar si el archivo "credenciales" existe
-        if (preferences.contains("cuenta") && preferences.contains("password")) {
-            // El archivo "credenciales" existe, puedes recuperar los valores
-             nombre = preferences.getString("user", "");
-             account = preferences.getString("cuenta", "");
-             pass = preferences.getString("password", "");
-            edtPassword.setText(pass);
-            edtCuenta.setText(account);
-            Toast.makeText(this, "Espera...", Toast.LENGTH_LONG).show();
 
-       //     confirmar_usuario_firebase();
-        } else {
-            Intent intent = new Intent(acceso.this, registrarse.class);
-            startActivity(intent);
-        }
+        // El archivo "credenciales" existe, puedes recuperar los valores
+        nombre = preferences.getString("user", "");
+        account = preferences.getString("cuenta", "");
+        pass = preferences.getString("password", "");
+        edtPassword.setText(pass);
+        edtCuenta.setText(account);
+        Toast.makeText(this, "Espera...", Toast.LENGTH_LONG).show();
 
     }
 
@@ -94,31 +67,34 @@ public class acceso extends AppCompatActivity {
 
         if (cuentaIngresado.isEmpty() || pass_usuario.isEmpty()) {
             Toast.makeText(this, "Ingrese correo y contraseña", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mfirestore.collection("usuario")
-                .whereEqualTo("N.Cuenta", edtCuenta.getText().toString().trim())
-                .whereEqualTo("password", edtPassword.getText().toString().trim())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            // Usuario no existe, ejecutar código de registro
-                            Intent intent = new Intent(acceso.this, Contenedor.class);
-                            intent.putExtra("nombre", nombre);
-                            intent.putExtra("cuenta", account);
-                            startActivity(intent);
-                            if (task.getResult().isEmpty()) {
-                                Toast.makeText(acceso.this, "Usuario no registrado", Toast.LENGTH_SHORT).show();
+
+        } else {
+            mfirestore.collection("usuario")
+                    .whereEqualTo("N.Cuenta", cuentaIngresado)
+                    .whereEqualTo("password", pass_usuario)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult().isEmpty()) {
+                                    Toast.makeText(acceso.this, "Usuario no registrado", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent = new Intent(acceso.this, Contenedor.class);
+                                    intent.putExtra("nombre", nombre);
+                                    intent.putExtra("cuenta", account);
+                                    startActivity(intent);
+                                }
+
                             } else {
                                 Toast.makeText(acceso.this, "Datos no guardados", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
+                             /*else{
+                                Log.d("TAG", "Error getting documents: ", task.getException());
+                            }*/
                         }
-                    }
-                });
+                    });
+        }
     }
 
     @Override
