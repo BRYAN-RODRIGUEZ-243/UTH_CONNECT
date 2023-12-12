@@ -21,7 +21,7 @@ public class ListarUsuarios extends AppCompatActivity {
         setContentView(R.layout.activity_listar_usuarios);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        personsCollection = db.collection("persons"); // Replace "persons" with your Firestore collection name
+        personsCollection = db.collection("usuario"); // Reemplaza "usuario" con el nombre de tu colección en Firestore
 
         recyclerView = findViewById(R.id.recycler1);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -30,9 +30,19 @@ public class ListarUsuarios extends AppCompatActivity {
                 .setQuery(personsCollection, Person.class)
                 .build();
 
-        adapter = new PersonAdapter(options.getSnapshots());
+        adapter = new PersonAdapter(options);
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 }

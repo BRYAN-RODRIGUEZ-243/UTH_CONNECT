@@ -36,7 +36,9 @@ public class acceso extends AppCompatActivity {
         btnRegistrarse = findViewById(R.id.btnRegistrarse);
         cargarPreferencias();
 
-        btnIniciar.setOnClickListener(view -> confirmar_usuario_firebase());
+        btnIniciar.setOnClickListener(view -> {
+            confirmar_usuario_firebase();
+        });
 
         btnRegistrarse.setOnClickListener(view -> {
 
@@ -78,12 +80,13 @@ public class acceso extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 if (task.getResult().isEmpty()) {
-                                    Toast.makeText(acceso.this, "Usuario no registrado", Toast.LENGTH_SHORT).show();
-                                } else {
                                     Intent intent = new Intent(acceso.this, Contenedor.class);
                                     intent.putExtra("nombre", nombre);
                                     intent.putExtra("cuenta", account);
                                     startActivity(intent);
+                                } else {
+                                  
+                                    Toast.makeText(acceso.this, "Usuario no registrado", Toast.LENGTH_SHORT).show();
                                 }
 
                             } else {

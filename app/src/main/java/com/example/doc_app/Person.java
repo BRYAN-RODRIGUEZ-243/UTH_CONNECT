@@ -1,48 +1,34 @@
 package com.example.doc_app;
-// Your package name can be different depending
-// on your project name
+public class Person {
+    private String nombre;
+    private String facultad;
+    private String carrera;
 
-public class Person
-{
-    // Variable to store data corresponding
-    // to firstname keyword in database
-    private String firstname;
-
-    // Variable to store data corresponding
-    // to lastname keyword in database
-    private String lastname;
-
-    // Variable to store data corresponding
-    // to age keyword in database
-    private String age;
-
-    // Mandatory empty constructor
-    // for use of FirebaseUI
+    // Constructor predeterminado requerido para FirebaseUI
     public Person() {}
 
-    // Getter and setter method
-    public String getFirstname()
-    {
-        return firstname;
+    // Getters and setters
+    public String getNombre() {
+        return nombre;
     }
-    public void setFirstname(String firstname)
-    {
-        this.firstname = firstname;
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    public String getLastname()
-    {
-        return lastname;
+
+    public String getFacultad() {
+        return facultad;
     }
-    public void setLastname(String lastname)
-    {
-        this.lastname = lastname;
+
+    public void setFacultad(String facultad) {
+        this.facultad = facultad;
     }
-    public String getAge()
-    {
-        return age;
+
+    public String getCarrera() {
+        return carrera;
     }
-    public void setAge(String age)
-    {
-        this.age = age;
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
     }
 }

@@ -42,10 +42,9 @@ public class enviar_clave_confirmacion extends AppCompatActivity {
             try {
                 Thread.sleep(1000);
 
-                Intent intentN = new Intent(enviar_clave_confirmacion.this, confirmar_clave.class);
-                intentN.putExtra("nombre", nombre);
-                intentN.putExtra("cuenta", seleccion);
-                startActivity(intentN);
+                // You are starting an activity from a non-UI thread. This could cause issues.
+                // It's better to use runOnUiThread or a Handler for UI-related tasks.
+                runOnUiThread(() -> startNextActivity());
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -55,13 +54,20 @@ public class enviar_clave_confirmacion extends AppCompatActivity {
     }
 
     private void startNextActivity() {
-      /*  Intent intent = new Intent(enviar_clave_confirmacion.this, confirmar_clave.class);
+        Intent intent = new Intent(enviar_clave_confirmacion.this, confirmar_clave.class);
         intent.putExtra("nombre", nombre);
         intent.putExtra("cuenta", seleccion);
-        startActivity(intent);*/
+        startActivity(intent);
     }
-/*
-    public void enviar() {
+
+    /*
+    Commented-out code:
+    - It seems to be related to sending an email, but it's incomplete.
+    - You should uncomment and complete this code if you intend to use it.
+    - Also, be careful about hardcoding email and password; consider using secure methods for handling credentials.
+    */
+    /*
+    private void sendEmail() {
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.googlemail.com");
         properties.put("mail.smtp.socketFactory.port", "465");
@@ -72,20 +78,26 @@ public class enviar_clave_confirmacion extends AppCompatActivity {
             sesion = Session.getDefaultInstance(properties, new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(correo,con) ;
+                    return new PasswordAuthentication(correo, con);
                 }
             });
-            if(sesion != null){
-                Message message = new MimeMessage(sesion);
-                message.setTarget();
-                message.setFrom(new InternetAddress(correo));
-                message.setSubject("Vamos bien");
-                message.setRecipies(Message.Recipient)
-
-
+            if (sesion != null) {
+                try {
+                    Message message = new MimeMessage(sesion);
+                    message.setFrom(new InternetAddress(correo));
+                    message.setSubject("Vamos bien");
+                    // Set recipients, content, and send the message
+                    // You need to complete this part based on your requirements.
+                    // message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("recipient@example.com"));
+                    // message.setContent("Your email content here", "text/html; charset=utf-8");
+                    // Transport.send(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
+    */
 }

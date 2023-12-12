@@ -8,10 +8,8 @@
     android:textAlignment="center"
     tools:context=".crear_grupo">
 
-
-
     <LinearLayout
-
+        android:id="@+id/linearr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >

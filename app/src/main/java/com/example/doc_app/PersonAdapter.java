@@ -1,26 +1,24 @@
 package com.example.doc_app;
-
-import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.util.ArrayList;
-import java.util.List;
+public class PersonAdapter extends FirestoreRecyclerAdapter<Person, PersonAdapter.PersonViewHolder> {
 
-public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
-    PersonAdapter adapter;
-    private List<Person> personList;
+    public PersonAdapter(@NonNull FirestoreRecyclerOptions<Person> options) {
+        super(options);
+    }
 
-    public PersonAdapter(List<Person> personList) {
-        this.personList = personList;
+    @Override
+    protected void onBindViewHolder(@NonNull PersonViewHolder holder, int position, @NonNull Person model) {
+        holder.bind(model);
     }
 
     @NonNull
@@ -30,30 +28,23 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         return new PersonViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull PersonViewHolder holder, int position) {
-        Person person = personList.get(position);
-        holder.firstname.setText(person.getFirstname());
-        holder.lastname.setText(person.getLastname());
-        holder.age.setText(person.getAge());
-    }
-
-    @Override
-    public int getItemCount() {
-        return personList.size();
-    }
-
     public class PersonViewHolder extends RecyclerView.ViewHolder {
-        TextView firstname, lastname, age;
+        private TextView nombreTextView;
+        private TextView facultadTextView;
+        private TextView carreraTextView;
 
         public PersonViewHolder(@NonNull View itemView) {
             super(itemView);
-            firstname = itemView.findViewById(R.id.firstname);
-            lastname = itemView.findViewById(R.id.lastname);
-            age = itemView.findViewById(R.id.age);
+            nombreTextView = itemView.findViewById(R.id.firstname);
+            facultadTextView = itemView.findViewById(R.id.lastname);
+            carreraTextView = itemView.findViewById(R.id.age);
+        }
+
+        public void bind(Person person) {
+            // Bind data to TextViews
+            nombreTextView.setText(person.getNombre());
+            facultadTextView.setText(person.getFacultad());
+            carreraTextView.setText(person.getCarrera());
         }
     }
-
-
-
 }
