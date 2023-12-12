@@ -2,63 +2,80 @@ package com.example.doc_app;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
+
 public class crear_grupo extends AppCompatActivity {
-    private LinearLayout linearLayout;
-    private TextView txtNombreGrupo;
-    private Button btnCrear;
+    Button crear;
+    TextView nombre_grupo;
+    ListView listViewGrupos;
+    ArrayList<String> listaGrupos;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_grupo);
 
+        // Inicializa los componentes de la interfaz de usuario
+        crear = findViewById(R.id.btncrear);
+        nombre_grupo = findViewById(R.id.ArNombres);
+        listViewGrupos = findViewById(R.id.listViewGrupos);
 
-        txtNombreGrupo = findViewById(R.id.ArNombres);
-        btnCrear = findViewById(R.id.btncrear);
+        // Inicializa la lista de grupos
+        listaGrupos = new ArrayList<>();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaGrupos);
+        listViewGrupos.setAdapter(adapter);
 
-        btnCrear.setOnClickListener(new View.OnClickListener() {
+        // Configura el botón para crear un nuevo grupo
+        crear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // Crear CardView
-                CardView cardView = new CardView(crear_grupo.this);
-                cardView.setLayoutParams(new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                ));
-                cardView.setCardBackgroundColor(ContextCompat.getColor(crear_grupo.this, android.R.color.white));
+            public void onClick(View v) {
 
-                // Crear TextView1
-                TextView textView1 = new TextView(crear_grupo.this);
-                textView1.setLayoutParams(new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                ));
-                textView1.setText("Nombre");
-                textView1.setId(R.id.nombre); // Ajusta el ID según tus necesidades
+                // Inicializa Firebase
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                // Agregar TextViews al CardView
-                cardView.addView(textView1);
+                // Obtiene una referencia a la base de datos con el nombre "chat"
+                DatabaseReference chatReference = database.getReference(nombre_grupo.getText().toString());
+                Toast.makeText(getApplicationContext(), "GRUPO CREADO", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                // Crear nuevo LinearLayout para debajo del botón
-                LinearLayout newLinearLayout = new LinearLayout(crear_grupo.this);
-                newLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                ));
-                newLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        // Recupera y muestra la lista de grupos existentes
+        mostrarListaDeGrupos();
+    }
 
-                // Agregar CardView al nuevo LinearLayout
-                newLinearLayout.addView(cardView);
+    private void mostrarListaDeGrupos() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference gruposReference = database.getReference("grupos");
 
-                // Agregar nuevo LinearLayout debajo del botón
-                linearLayout.addView(newLinearLayout);
+        gruposReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listaGrupos.clear();
+
+                for (DataSnapshot grupoSnapshot : dataSnapshot.getChildren()) {
+                    String nombreGrupo = grupoSnapshot.getKey();
+                    listaGrupos.add(nombreGrupo);
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Error al recuperar la lista de grupos", Toast.LENGTH_SHORT).show();
             }
         });
     }

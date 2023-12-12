@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,63 +8,26 @@
     android:textAlignment="center"
     tools:context=".crear_grupo">
 
-    <LinearLayout
-        android:id="@+id/linearr"
+    <EditText
+        android:id="@+id/ArNombres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:inputType="text"
+        android:hint="Nombre del grupo"/>
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            android:text="GRUPOS" />
+    <Button
+        android:id="@+id/btncrear"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ArNombres"
+        android:layout_marginTop="16dp"
+        android:text="Crear Grupo" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="88dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="30dp"
-            android:text="Nombres:"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+    <ListView
+        android:id="@+id/listViewGrupos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btncrear"
+        android:layout_marginTop="16dp" />
+</RelativeLayout>
 
-        <EditText
-            android:id="@+id/ArNombres"
-            android:layout_width="348dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:inputType="text"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp" />
-
-        <Button
-            android:id="@+id/btncrear"
-            android:layout_width="146dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
-            android:backgroundTint="@color/white"
-            android:text="Crear"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-
-</ScrollView>
